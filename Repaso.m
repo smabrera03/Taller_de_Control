@@ -17,4 +17,27 @@ bode(L, opt, {100, 100000});
 title('Bode L');
 
 
-%%
+%% Ancho de banda
+close all;
+s = tf('s');
+zeta = 1;
+wn = 10;
+k = 1;
+
+L = k * wn^2/(s^2 + 2*zeta*wn*s + wn^2);
+
+opt = bodeoptions();
+opt.grid = 'On';
+opt.PhaseMatching = 'On';
+opt.PhaseMatchingValue = -180;
+opt.PhaseMatchingFreq = 1;
+
+figure();
+bode(L, opt, {0.1, 10000});
+title('Bode L');
+
+T = L/(1 + L);
+figure();
+bode(T, opt, {0.1, 10000});
+title('Bode T');
+
